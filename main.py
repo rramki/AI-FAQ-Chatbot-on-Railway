@@ -1,14 +1,19 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
 import json
 
 app = FastAPI()
 
+templates = Jinja2Templates(directory="templates")
+
 with open("faq.json") as f:
     faq = json.load(f)
 
-@app.get("/")
-def home():
-    return {"message": "AI FAQ Bot running"}
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/ask")
 def ask(question: str):

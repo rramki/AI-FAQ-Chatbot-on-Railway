@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI FAQ Chatbot</title>
+</head>
+
+<body>
+
+<h2>AI FAQ Chatbot</h2>
+
+<input type="text" id="question" placeholder="Ask a question">
+<button onclick="ask()">Send</button>
+
+<p id="response"></p>
+
+<script>
+
+async function ask() {
+
+let q = document.getElementById("question").value;
+
+let response = await fetch(`/ask?question=${q}`);
+
+let data = await response.json();
+
+document.getElementById("response").innerText = data.answer;
+
+}
+
+</script>
+
+</body>
+</html>
